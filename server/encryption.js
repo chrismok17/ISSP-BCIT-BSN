@@ -1,5 +1,10 @@
 const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
+const MYSQL_DB = process.env.MYSQL_DB;
+const MYSQL_HOST = process.env.MYSQL_HOST;
+const MYSQL_USER = process.env.MYSQL_USER;
+const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
 
 /*
 userid, email, password need to be changed to user's
@@ -17,10 +22,10 @@ const encryption = (password) => {
         })
         .then(hash => {
             const db = mysql.createConnection({
-                host: "143.198.158.241",
-                user: "bsnmysql",
-                password: "bcitbsn491",
-                database: "bcit_bsn"
+                host: MYSQL_HOST,
+                user: MYSQL_USER,
+                password: MYSQL_PASSWORD,
+                database: MYSQL_DB
             });
             
             db.connect(function(err) {
@@ -31,8 +36,8 @@ const encryption = (password) => {
             })
             
             //change userid, email, password to test
-            let sql = `INSERT INTO users (userid, email, password) VALUES ('1', 'jace@gmail.com', '${hash}')`;
-            //let sql = `SELECT * FROM users WHERE email=jace@gmail.com`;
+            //let sql = `INSERT INTO users (email, password) VALUES ('jace@gmail.com', '${hash}')`;
+            let sql = `SELECT * FROM users WHERE email='jace@gmail.com'`;
             
             db.query(sql, (error, results, fields) => {
                 if (error) {
@@ -43,9 +48,11 @@ const encryption = (password) => {
             
             db.end();
         })
+        /*
         .then(hash => {
             validate(hash)
         })
+        */
         .catch(err => console.error(err.message))
     
     const validate = (hash) => {
@@ -58,3 +65,5 @@ const encryption = (password) => {
     }
 }
 encryption(password)
+
+//export default encryption;
