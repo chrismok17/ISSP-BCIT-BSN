@@ -30,17 +30,7 @@ function App() {
   if (!token) {
     return <Login setToken={setToken} />
   }
-  // const express = require('express')
-  // const app = express()
-  // const passport = require('passport')
-  // const session = require('express-session')
-  // const LocalStrategy = require('passport-local').Strategy
 
-
-  // app.use(session({ 
-  //   secret: 'secret', 
-  //   resave: true, 
-  //   saveUninitialized: true }))
   return (
     <div className="App">
       <Calendar
