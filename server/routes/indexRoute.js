@@ -7,6 +7,17 @@ const passport = require("../middleware/passport");
 
 router.get("/", forwardAuthenticated, (req, res) => res.render("login"));
 
+// Previous code, ignore
+
+// app.use('/login', (req, res) => {
+//   res.send({
+//     token: 'test123'
+//   });
+// });
+
+// Created /login endpoint to get login values from front end
+// Trying to get the values to be compared with values from mysql
+// If successful please send status 200
 router.post("/login", (req, res, next) => {
   console.log(req.body)
     passport.authenticate("local", (err, user, info) => {
