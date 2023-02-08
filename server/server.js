@@ -1,0 +1,36 @@
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const session = require("express-session");
+const path = require("path");
+const port = 8000;
+
+const app = express();
+
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
+
+const passport = require("./middleware/passport");
+const indexRoute = require("./routes/indexRoute");
+
+app.use(expressLayouts); 
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/", indexRoute);
+
+app.listen(port, () => {
+  console.log(`Server on port ${port}`);
+});
