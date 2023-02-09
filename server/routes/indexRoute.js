@@ -18,10 +18,9 @@ router.get("/", forwardAuthenticated, (req, res) => res.render("login"));
 // Created /login endpoint to get login values from front end
 // Trying to get the values to be compared with values from mysql
 // If successful please send status 200
+
 router.post("/login", (req, res, next) => {
-  console.log(req.body)
     passport.authenticate("local", (err, user, info) => {
-      // console.log(user)
       if (err) {
         return next(err)
       }
@@ -29,11 +28,10 @@ router.post("/login", (req, res, next) => {
         return res.status(401).send({message: info.message})
       }
       req.logIn(user, (err) => {
-        console.log(user)
         if (err) {
           return next(err);
         } 
-        return res.status(200).json({message: "Success"})
+        return res.status(200).send({message: "Success"})
       })
     })(req, res, next)
 })

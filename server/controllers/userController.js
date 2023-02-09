@@ -2,7 +2,7 @@ const userModel = require("../models/userModel").userModel;
 const bcrypt = require("bcrypt");
 
 const getUserByEmailIdAndPassword = async (email, password) => {
-  let user = await userModel.findOne(email);
+  let user = await userModel.findOne(email).catch(err => console.error(err));
 
   if (user) {
     const checkPassword = await isUserValid(user, password);
@@ -14,7 +14,7 @@ const getUserByEmailIdAndPassword = async (email, password) => {
 };
 
 const getUser = async (id) => {
-  let user = await userModel.findById(id);
+  let user = await userModel.findById(id).catch(err => console.error(err));
   if (user) {
     return user;
   }

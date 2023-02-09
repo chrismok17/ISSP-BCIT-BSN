@@ -34,7 +34,7 @@ export default function Login() {
       .then(data => {
         // Right now I have an alert to pop up if the status code from the /login endpoint is recieved
         // I get "no bueno" no matter what so it's a compare credentials issue i assume
-        if (data.status === 200 || data.status === 204) {
+        if (data.message === "Success") {
           alert("Success")
         } else {
           alert("no bueno")

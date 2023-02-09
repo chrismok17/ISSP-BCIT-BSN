@@ -3,14 +3,14 @@ module.exports = {
     if (req.isAuthenticated()) {
       return next();
     }
-    res.redirect("/");
+    //res.redirect("/");
   },
 
   forwardAuthenticated: function (req, res, next) {
     if (!req.isAuthenticated()) {
       return next();
     }
-    res.redirect("/dashboard");
+    //res.redirect("/dashboard");
   },
 
   /*isAdmin: function() {
