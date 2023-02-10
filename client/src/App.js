@@ -35,12 +35,12 @@ function App() {
     <div className="App">
       <Calendar
         onChange={onChange}
-        value={value} 
+        value={value}
         onClickDay={(value, event) => {
-          console.log("clicked.", value, event)
-          setPopUpOpen(!popUpOpen)
+          console.log("clicked.", value, event);
+          setPopUpOpen(!popUpOpen);
         }}
-        />
+      />
       {popUpOpen && <PopUp />}
     </div>,
     
