@@ -21,7 +21,7 @@ function AddItem(props) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, description }),
+      body: JSON.stringify({ title, description, date }),
     })
       //sends json w/ title/description in proper format
       .then((res) => res.json())

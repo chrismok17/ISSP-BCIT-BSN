@@ -11,6 +11,18 @@ const MYSQL_USER = process.env.MYSQL_USER;
 const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
 router.get("/", forwardAuthenticated, (req, res) => res.render("login"));
 
+//establishes DB connection
+const db = mysql.createConnection({
+  host: MYSQL_HOST,
+  user: MYSQL_USER,
+  password: MYSQL_PASSWORD,
+  database: MYSQL_DB,
+});
+
+db.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected");
+});
 // Previous code, ignore
 
 // app.use('/login', (req, res) => {
@@ -48,31 +60,19 @@ router.post(
   })
 );
 
-// router.post("/add", (req, res) => {
-//   //mysql connection
-//   // res.send(sql= )
-
-//   const db = mysql.createConnection({
-//     host: MYSQL_HOST,
-//     user: MYSQL_USER,
-//     password: MYSQL_PASSWORD,
-//     database: MYSQL_DB,
-//   });
-
-//   db.connect(function (err) {
-//     if (err) throw err;
-//     console.log("Connected");
-//   });
-//   let sql = `INSERT INTO announcements (title, description, data) VALUES (req.body.title, req.body.description, req.body.date)`;
-//   db.query(sql, (error, results, fields) => {
-//     if (error) {
-//       throw error;
-//     }
-//     console.log(results);
-//   });
-
-//   db.end();
-// });
+//fetch() in AddItem.js sends announcement title/description/date to /add endpoint
+//this endpoint sends announcement data to mysql
+router.post("/add", (req, res) => {
+  let title = req.body.title;
+  let description = req.body.description;
+  let date = req.body.date;
+  let sql = `INSERT INTO announcements (title, description, data) VALUES (${title}, ${description}, ${date})`;
+  db.query(sql, (error, results, fields) => {
+    if (error) throw error;
+    console.log(results);
+  });
+  res.send(title, description, date);
+});
 
 router.get("/logout", (req, res) => {
   req.logout();
