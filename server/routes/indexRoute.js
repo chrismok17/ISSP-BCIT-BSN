@@ -3,8 +3,12 @@ const router = express.Router();
 const { ensureAuthenticated, isAdmin } = require("../middleware/checkAuth");
 const { forwardAuthenticated } = require("../middleware/checkAuth");
 const passport = require("../middleware/passport");
-
-
+const mysql = require("mysql2");
+require("dotenv").config();
+const MYSQL_DB = process.env.MYSQL_DB;
+const MYSQL_HOST = process.env.MYSQL_HOST;
+const MYSQL_USER = process.env.MYSQL_USER;
+const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
 router.get("/", forwardAuthenticated, (req, res) => res.render("login"));
 
 // Previous code, ignore
@@ -20,21 +24,21 @@ router.get("/", forwardAuthenticated, (req, res) => res.render("login"));
 // If successful please send status 200
 
 router.post("/login", (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).send({ message: info.message });
+    }
+    req.logIn(user, (err) => {
       if (err) {
-        return next(err)
+        return next(err);
       }
-      if (!user) {
-        return res.status(401).send({message: info.message})
-      }
-      req.logIn(user, (err) => {
-        if (err) {
-          return next(err);
-        } 
-        return res.status(200).send({message: "Success"})
-      })
-    })(req, res, next)
-})
+      return res.status(200).send({ message: "Success" });
+    });
+  })(req, res, next);
+});
 
 router.post(
   "/",
@@ -43,6 +47,32 @@ router.post(
     failureRedirect: "/",
   })
 );
+
+// router.post("/add", (req, res) => {
+//   //mysql connection
+//   // res.send(sql= )
+
+//   const db = mysql.createConnection({
+//     host: MYSQL_HOST,
+//     user: MYSQL_USER,
+//     password: MYSQL_PASSWORD,
+//     database: MYSQL_DB,
+//   });
+
+//   db.connect(function (err) {
+//     if (err) throw err;
+//     console.log("Connected");
+//   });
+//   let sql = `INSERT INTO announcements (title, description, data) VALUES (req.body.title, req.body.description, req.body.date)`;
+//   db.query(sql, (error, results, fields) => {
+//     if (error) {
+//       throw error;
+//     }
+//     console.log(results);
+//   });
+
+//   db.end();
+// });
 
 router.get("/logout", (req, res) => {
   req.logout();
