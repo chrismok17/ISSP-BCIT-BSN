@@ -66,7 +66,19 @@ router.post("/add", (req, res) => {
   let title = req.body.title;
   let description = req.body.description;
   let date = req.body.date;
-  let sql = `INSERT INTO announcements (title, description, data) VALUES (${title}, ${description}, ${date})`;
+  let sql = `INSERT INTO announcements (title, description, data) VALUES ('${title}', '${description}', '${date}')`;
+  db.query(sql, (error, results, fields) => {
+    if (error) throw error;
+    console.log(results);
+  });
+  res.send(title, description, date);
+});
+
+router.post("/delete", (req, res) => {
+  let title = req.body.title;
+  let description = req.body.description;
+  let date = req.body.date;
+  let sql = `DELETE FROM announcements WHERE announcements.title = '${title}' AND announcements.description = '${description}' AND announcements.date = '${date}'`;
   db.query(sql, (error, results, fields) => {
     if (error) throw error;
     console.log(results);
