@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 // import { ReactComponentElement as ReactLogo } from './logo.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import './App.css';
 import 'react-calendar/dist/Calendar.css';
@@ -11,21 +11,14 @@ import Login from './components/Login/Login.js';
 // import Login from "./..client/../login";
 import useToken from './components/App/useToken';
 
-// function setToken(userToken) {
-//   sessionStorage.setItem('token', JSON.stringify(userToken));
-// }
-
-// function getToken(){
-//   const tokenString = sessionStorage.getItem('token');
-//   const userToken = JSON.parse(tokenString);
-//   return userToken?.token
-
-// }
-
 function App() {
   const { token, setToken } = useToken();
   const [value, onChange] = useState(new Date())
   const [ popUpOpen, setPopUpOpen] = useState(false)
+
+  useEffect(() => {
+    console.log('token changed', token)
+  }, [token])
   // const [token, setToken] = useState();
   if (!token) {
     return <Login setToken={setToken} />
