@@ -1,9 +1,19 @@
-import React, { useContext }from "react";
+import React, { useContext, useState } from "react";
 import "./popup.css"
 import { GlobalContext } from "../context";
+import FormRow from './FormRow'
 
 export default function PopUp () {
   const context = useContext(GlobalContext)
+
+  const [editFormVisible, setEditFormVisible] = useState(false)
+  const [formState, setFormState] = useState(context.state.selectedDay)
+
+  function handleFinishEditing () {
+    console.log('no more editing')
+    setEditFormVisible(false)
+  }
+
   if (context.state.popupOpen) {
     return (
       <div className="popup">
@@ -16,6 +26,19 @@ export default function PopUp () {
             <div>Room Number: {data['room-number']}</div>
           </div>
         ))}
+        {context.state.isAdmin && !editFormVisible && (
+          <button onClick={() => setEditFormVisible(true)}>edit</button>
+        )}
+        {editFormVisible && (
+          <>
+            <FormRow
+              setForms={setFormState}
+              forms={formState.length > 0 ? formState : context.state.selectedDay}
+              formNumber={0}
+            />
+            <button onClick={handleFinishEditing}>finish editing</button>
+          </>
+        )}
       </div>
     )
   }

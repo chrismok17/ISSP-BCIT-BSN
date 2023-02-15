@@ -7,6 +7,8 @@ export default function FormRow ({ formNumber, forms, setForms }) {
     setForms(newForms)
   }
 
+  console.log('formstate is ', forms)
+
   return (
     <form className="data-form">
       <div className="data-form__inputs">

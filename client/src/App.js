@@ -6,7 +6,7 @@ import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
 import CalendarPage from './containers/Calendar';
 import DataForm from './containers/DataForm';
-
+import SurveyPage from './containers/SurveyPage';
 
 
 // function setToken(userToken) {
@@ -25,18 +25,20 @@ function App() {
   const [value, onChange] = useState(new Date())
   const [ popUpOpen, setPopUpOpen] = useState(false)
   // const [token, setToken] = useState();
-  if (!token) {
-    return <Login setToken={setToken} />
-  }
+  // if (!token) {
+  //   return <Login setToken={setToken} />
+  // }
 
   return (
     <>
       <nav>
         <Link to="/">Calendar </Link>
         <Link to="/update">Update</Link>
+        <Link to="/survey">Survey</Link>
       </nav>
       <Routes>
         <Route index element={< CalendarPage />} />
+        <Route path="/survey" element={<SurveyPage />} />
         <Route path="/update" element={<DataForm />} />
       </Routes>
     </>

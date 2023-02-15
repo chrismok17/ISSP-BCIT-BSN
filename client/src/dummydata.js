@@ -17,7 +17,7 @@ export const dummyData =
       "facilitator": "Michael"
   },
   {
-      "date": "2023-02-25",
+      "date": "2023-02-21",
       "room-number": "2632",
       "start-time": "10:30",
       "end-time": "13:30",
@@ -33,7 +33,7 @@ export const dummyData =
       "facilitator": "Marija"
   },
   {
-      "date": "2023-02-18",
+      "date": "2023-02-14",
       "room-number": "3020",
       "start-time": "10:30",
       "end-time": "13:30",
@@ -49,7 +49,7 @@ export const dummyData =
       "facilitator": "James"
   },
   {
-      "date": "2023-02-05",
+      "date": "2023-02-03",
       "room-number": "3020",
       "start-time": "10:30",
       "end-time": "13:30",
@@ -63,5 +63,13 @@ export const dummyData =
       "end-time": "13:30",
       "stat": false,
       "facilitator": "Jordan"
+  },
+  {
+    "date": "2023-03-01",
+    "room-number": "3020",
+    "start-time": "10:30",
+    "end-time": "14:20",
+    "stat": false,
+    "facilitator": "Kim"
   }
 ]

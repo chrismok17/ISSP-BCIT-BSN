@@ -1,5 +1,7 @@
 export const initialState = {
   popupOpen: false,
   sheetData: [],
-  selectedDay: []
+  selectedDay: [],
+  userData: { email: '', token: '' },
+  isAdmin: true
 }

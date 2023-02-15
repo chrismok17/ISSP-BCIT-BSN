@@ -8,40 +8,54 @@ import { dummyData } from '../dummydata';
 
 export default function CalendarPage() {
   const Context = useContext(GlobalContext);
-  const [value, onChange] = useState(new Date())
+  const [month, setMonth] = useState(new Date())
   const [ filteredSheetData, setFilteredSheetData ] = useState([])
   const matchedDates = useRef({})
 
   useEffect(() => {
+    // calendar month button is buggy. this prevents it from being used
+    const calendarMonthLabel = document.querySelector('.react-calendar__navigation button.react-calendar__navigation__label')
+    calendarMonthLabel.setAttribute('tabindex', -1)
+    calendarMonthLabel.style.pointerEvents = 'none'
+  }, [])
+
+  useEffect(() => {
     if (dummyData.length > 0) {
       setFilteredSheetData(dummyData.filter((openLab) => {
-        return new Date(openLab.date).getMonth() === value.getMonth()
+        return new Date(openLab.date).getUTCMonth() === month.getMonth()
       }))
     }
     // eslint-disable-next-line
-  }, [dummyData])
+  }, [dummyData, month])
+
+  function handleActiveStartDateChange ({ activeStartDate }) {
+    setMonth(activeStartDate)
+  }
 
   return (
     <div className="App">
       <Calendar
-        onChange={onChange}
-        value={value}
+        onActiveStartDateChange={handleActiveStartDateChange}
+        value={month}
         onClickDay={(date, event) => {
-          console.log("date, event", date, event)
-          console.log("matched dates", matchedDates)
           const selectedDay = matchedDates.current[date.toISOString()]
           if (selectedDay) {
             Context.setPopup(!Context.state.popupOpen)
             Context.setSelectedDay(selectedDay)
           }
         }}
-        tileContent={({ date, view }) =>{
+        showNeighboringMonth={false}
+        tileDisabled={({ activeStartDate, date, view }) => {
+          return date.getDay() === 0 || date.getDay() === 6
+        }}
+        tileContent={({ date, view }) => {
           let matchingDay = []
-          if (filteredSheetData.length > 0 && date.getMonth() === value.getMonth()) {
+          if (filteredSheetData.length > 0 && date.getMonth() === month.getMonth()) {
             matchingDay = filteredSheetData.filter((openLab) => {
-              return date.getDate() === new Date(openLab.date).getDate()
+              return date.getDate() === new Date(openLab.date).getUTCDate()
             })
             if (matchingDay.length > 0) {
+              // store matched dates for the month in an object to make looking up a clicked day faster
               matchedDates.current = {
                 ...matchedDates.current,
                 [date.toISOString()]: matchingDay
