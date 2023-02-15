@@ -1,17 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const { ensureAuthenticated, isAdmin } = require("../middleware/checkAuth");
+const { ensureAuthenticated, isAdmin, checkNotAuthenticated } = require("../middleware/checkAuth");
 // const { forwardAuthenticated } = require("../middleware/checkAuth");
-const { checkNotAuthenticated } = require("../middleware/checkAuth")
 const passport = require("../middleware/passport");
+const jwt = require('jsonwebtoken')
 
 
-router.get("/", ensureAuthenticated, (req, res) => 
-res.render("dashboard.ejs"));
+function getUserToken (email) {
+  return jwt.sign({ email }, process.env.SECRET_KEY)
+}
 
-router.get("/login", checkNotAuthenticated, (req, res) => {
-  res.render("login.ejs");
-});
+// router.get("/", ensureAuthenticated, (req, res) => 
+// res.render("dashboard.ejs"));
+
+// router.get("/login", checkNotAuthenticated, (req, res) => {
+//   res.render("login.ejs");
+// });
 
 router.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("signup.ejs");
@@ -40,13 +44,22 @@ router.get("/signup", checkNotAuthenticated, (req, res) => {
 // })
 
 
-router.post("/login", checkNotAuthenticated ,(req, res, next) => {
+router.post(
+  "/login",
   passport.authenticate("local", {
-    successRedirect: "/",
+    // successRedirect: "/",
     failureRedirect: "/login",
-    failureFlash: true,
-  })(req, res, next);
-});
+    failureMessage: true
+    // failureFlash: true,
+  }),
+  (req, res) => {
+    // console.log('passport middleware success', Object.keys(req))
+    console.log('req user', req.user, req.authInfo, req.params)
+    const token = getUserToken(req.user.email)
+    res.status(200).json({ token })
+    res.end()
+  }
+)
 
 
 // router.post(

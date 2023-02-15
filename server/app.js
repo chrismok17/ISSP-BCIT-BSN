@@ -40,7 +40,11 @@ app.use(passport.session());
 app.use(overrideMethod('_method'))
 
 
-
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+  res.status(200)
+  res.end()
+})
 app.use("/", indexRoute);
 
 

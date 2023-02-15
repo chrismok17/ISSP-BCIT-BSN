@@ -67,6 +67,6 @@ const userModel = {
 //   // })
 // }
 
-module.exports = { db, userModel , addUser };
+module.exports = { db, userModel };
 
 
