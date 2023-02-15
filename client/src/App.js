@@ -1,15 +1,13 @@
-// import logo from './logo.svg';
-// import { ReactComponentElement as ReactLogo } from './logo.svg';
 import { useState } from 'react';
-import Calendar from 'react-calendar';
-import './App.css';
 import 'react-calendar/dist/Calendar.css';
-import PopUp from './components/PopUp';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './components/home/home.js';
 import Login from './components/Login/Login.js';
-// import Login from "./..client/../login";
 import useToken from './components/App/useToken';
+import './App.css';
+import { Routes, Route, Link } from "react-router-dom";
+import CalendarPage from './containers/Calendar';
+import DataForm from './containers/DataForm';
+
+
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -32,29 +30,17 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Calendar
-        onChange={onChange}
-        value={value}
-        onClickDay={(value, event) => {
-          console.log("clicked.", value, event);
-          setPopUpOpen(!popUpOpen);
-        }}
-      />
-      {popUpOpen && <PopUp />}
-    </div>,
-    
-    <div className="wrapper">
-    <h1>Application</h1>
-    <BrowserRouter>
+    <>
+      <nav>
+        <Link to="/">Calendar </Link>
+        <Link to="/update">Update</Link>
+      </nav>
       <Routes>
-        <Route path="/home">
-          <Home />
-        </Route>
+        <Route index element={< CalendarPage />} />
+        <Route path="/update" element={<DataForm />} />
       </Routes>
-    </BrowserRouter>
-  </div>
-);
+    </>
+  );
 }
 
 export default App;
