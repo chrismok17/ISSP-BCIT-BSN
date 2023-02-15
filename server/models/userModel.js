@@ -17,7 +17,7 @@ db.connect(function(err) {
   if (err) {
       throw err;
   }
-  console.log("Connected");
+  console.log(" Database Connected");
 })
 
 
@@ -53,6 +53,20 @@ const userModel = {
 
 }
 
-module.exports = { db, userModel };
+// const addUser = (email, password) => {
+//   let sql = `INSERT INTO users (email, password) VALUES ('${email}', '${password}')`;
+
+//   // return new Promise((resolve, reject) => {
+//   //   db.query(sql,  (error, results) =>{
+//   //     if (error) return reject(error);
+//   //     resolve(results);
+
+//   //   }
+
+//   //   )
+//   // })
+// }
+
+module.exports = { db, userModel , addUser };
 
 
