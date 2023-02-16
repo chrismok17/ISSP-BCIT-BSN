@@ -1,22 +1,11 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from 'react';
 import './Login.css';
-
-// Previous code
-
-// async function loginUser(credentials) {
-//  return fetch('http://localhost:8080/login', {
-//    method: 'POST',
-//    headers: {
-//      'Content-Type': 'application/json'
-//    },
-//    body: JSON.stringify(credentials)
-//  })
-//    .then(data => data.json())
-// }
+import { GlobalContext } from '../../context'
 
 // Moved fetch request to inside the Login(). This sends the username and password as json to localhost:8080/login to get authenticated
-export default function Login({ setToken }) {
+export default function Login() {
+  const context = useContext(GlobalContext)
+
   const [email, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -28,20 +17,18 @@ export default function Login({ setToken }) {
       headers: {
         'Content-Type': 'application/json'
       },
-      // credentials: 'same-origin',
       body: JSON.stringify({ email: email, password: password })
     })
       .then(response => {
         if (response.status === 200) {
-          console.log('response is 200')
           return response.json()
         } else {
           throw new Error('error when submitting data', { cause: response })
         }
       })
       .then(data => {
-        setToken(data.token)
-        console.log('what is data', data)
+        context.updateUserData(data.email, data.token, Boolean(data.isAdmin))
+        sessionStorage.setItem('token', JSON.stringify(data.token));
       })
       .catch((err) => {
         console.error('handleSubmit', err)
@@ -67,10 +54,7 @@ export default function Login({ setToken }) {
           </form>
       </div>
     </>
-    
+
   )
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-};

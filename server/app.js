@@ -41,10 +41,12 @@ app.use(overrideMethod('_method'))
 
 
 app.options('*', (req, res) => {
+  // this is temporary for development
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
   res.status(200)
   res.end()
 })
+
 app.use("/", indexRoute);
 
 
