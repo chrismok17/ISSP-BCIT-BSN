@@ -100,3 +100,10 @@ There is another temporary style for icon in component/Announcement/announcement
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
+.announcement-item {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid black;
+}
+

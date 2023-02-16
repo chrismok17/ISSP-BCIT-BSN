@@ -25,7 +25,7 @@ const DropdownAnnouncement = () => {
         <div className="dropdown-announcement-container">
           <div className="dropdown-announcement">
             {announcements.map(announcement => (
-                <div key={announcement.id}>
+                <div key={announcement.id} className="announcement-item">
                 <p>{announcement.title}</p>
                 <p>{announcement.description}</p>
                 <p>{announcement.date}</p>
