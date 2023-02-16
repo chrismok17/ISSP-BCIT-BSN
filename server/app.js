@@ -2,8 +2,8 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const path = require("path");
-const cors = require('cors')
-const bodyParser = require("body-parser")
+const cors = require("cors");
+const bodyParser = require("body-parser");
 const port = 8080;
 const overrideMethod = require('method-override')
 
@@ -18,7 +18,7 @@ app.use(express.static('build'));
 
 app.use(
   session({
-    secret: "secret",
+    secret: "secret_value",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -33,7 +33,7 @@ const passport = require("./middleware/passport");
 const indexRoute = require("./routes/indexRoute");
 const { checkNotAuthenticated } = require("./middleware/checkAuth");
 
-app.use(expressLayouts); 
+app.use(expressLayouts);
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -48,6 +48,14 @@ app.options('*', (req, res) => {
 })
 
 app.use("/", indexRoute);
+// app.get("/*", (req, res) => {
+//   res.sendFile(
+//     path.join(__dirname, "/components", "announcements.js"),
+//     (err) => {
+//       if (err) console.log(err);
+//     }
+//   );
+// });
 
 
 app.listen(port, () => {

@@ -10,6 +10,7 @@ import SurveyPage from './containers/SurveyPage';
 import Home from './containers/home'
 import { GlobalContext } from './context';
 import DropdownAnnouncement from './components/Announcement/announcement.js';
+import Announcement from "./components/Announcements/Announcement";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Link to="/calendar">Calendar </Link>
         <Link to="/update">Update</Link>
         <Link to="/survey">Survey</Link>
+        <Link to="/announcements">Announcements</Link>
         <button onClick={logout}>Logout</button>
         <DropdownAnnouncement />
       </nav>
@@ -37,6 +39,7 @@ function App() {
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/survey" element={<SurveyPage />} />
         <Route path="/update" element={<DataForm />} />
+        <Route path="/announcements" element={<Announcement />} />
       </Routes>
     </>
   );
