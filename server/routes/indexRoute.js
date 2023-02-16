@@ -4,6 +4,7 @@ const { ensureAuthenticated, isAdmin, checkNotAuthenticated } = require("../midd
 const passport = require("../middleware/passport");
 const jwt = require('jsonwebtoken')
 const path = require('path')
+const { getAnnouncement } = require("../models/announcement");
 
 
 function getUserToken (email) {
@@ -35,6 +36,16 @@ router.post('/logout', function(req, res, next) {
       if(err) return next(err);
       res.redirect('/login');
   });
+});
+
+router.get("/announcement", async (req, res) => {
+  try {
+    const announcement = await getAnnouncement();
+    return res.status(200).send(announcement);
+  } catch (error) {
+    return res.status(401).send({ error: error.message });
+  }
+  
 });
 
 
