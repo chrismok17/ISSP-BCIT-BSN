@@ -53,6 +53,24 @@ const userModel = {
 
 }
 
+const addUser = (email, password) => {
+  let sql = `INSERT INTO users (email, password) VALUES ('${email}', '${password}')`;
+  return new Promise((resolve, reject) => {
+    db.query(sql, (error, results) => {
+      if (error) {
+        console.log('Error: ' + error)
+        return reject(error);
+      }
+      else {
+        console.log('User added successfully')
+        resolve(results);
+      }
+    })
+    }
+    )
+
+  }
+
 // const addUser = (email, password) => {
 //   let sql = `INSERT INTO users (email, password) VALUES ('${email}', '${password}')`;
 
@@ -67,6 +85,6 @@ const userModel = {
 //   // })
 // }
 
-module.exports = { db, userModel };
+module.exports = { db, userModel, addUser};
 
 
