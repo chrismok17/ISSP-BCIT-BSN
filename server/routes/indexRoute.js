@@ -66,7 +66,7 @@ router.post("/add", (req, res) => {
   let title = req.body.title;
   let description = req.body.description;
   let date = req.body.date;
-  let sql = `INSERT INTO announcements (title, description, data) VALUES ('${title}', '${description}', '${date}')`;
+  let sql = `INSERT INTO announcements (title, description, date) VALUES ('${title}', '${description}', '${date}')`;
   db.query(sql, (error, results, fields) => {
     if (error) throw error;
     console.log(results);

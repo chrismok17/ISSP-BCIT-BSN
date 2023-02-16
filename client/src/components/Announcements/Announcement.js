@@ -5,9 +5,9 @@ import "./Announcements.css";
 const Announcement = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // const date = new Date()
-  // const formattedDate = date.toLocaleString("en-US", {timeZone: "America/Los_Angeles", hour12: false}).replace(/[/]/g, "-");
-  // const datetime = formattedDate.replace(",", "");
+  let date = new Date();
+  date.setHours(date.getHours() - 8);
+  let datetime= date.toISOString().slice(0, 19).replace('T', ' ');
   const handleSubmit = async (e) => {
     // Added 'e' parameter so that i can use e.preventDefault() since before I was getting page reload errors when trying to use fetch, this helps prevent it
     e.preventDefault();
@@ -16,7 +16,7 @@ const Announcement = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, description }),
+      body: JSON.stringify({ title, description, date:datetime }),
     })
       .then((response) => response.json())
       .then((data) => {
