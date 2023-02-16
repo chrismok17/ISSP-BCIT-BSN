@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <nav>
-        <Link to="/">Calendar </Link>
+        <Link to="/calendar">Calendar </Link>
         <Link to="/update">Update</Link>
         <Link to="/survey">Survey</Link>
       </nav>
