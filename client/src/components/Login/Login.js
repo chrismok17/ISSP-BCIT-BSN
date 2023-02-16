@@ -51,6 +51,10 @@ export default function Login() {
             <div className="submit-button">
               <button type="submit">SIGN IN</button>
             </div>
+            <p class="mt-4">New User? <a class="create-Link" href='/signup'>Sign Up</a></p>
+            <p>Forgot Password? <a href="/forgot">Reset</a></p>
+
+
           </form>
       </div>
     </>
