@@ -8,6 +8,7 @@ import DataForm from './containers/DataForm';
 import SurveyPage from './containers/SurveyPage';
 import Home from './containers/home'
 import { GlobalContext } from './context';
+import DropdownAnnouncement from './components/Announcement/announcement.js';
 
 
 function App() {
@@ -23,10 +24,11 @@ function App() {
 
   return (
     <>
-      <nav>
+      <nav className="navbar">
         <Link to="/calendar">Calendar </Link>
         <Link to="/update">Update</Link>
         <Link to="/survey">Survey</Link>
+        <DropdownAnnouncement />
       </nav>
       <Routes>
         <Route index element={<Home />} />
