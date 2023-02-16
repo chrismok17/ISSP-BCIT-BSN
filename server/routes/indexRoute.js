@@ -3,21 +3,21 @@ const router = express.Router();
 const { ensureAuthenticated, isAdmin, checkNotAuthenticated } = require("../middleware/checkAuth");
 const passport = require("../middleware/passport");
 const jwt = require('jsonwebtoken')
+const path = require('path')
 
 
 function getUserToken (email) {
   return jwt.sign({ email }, process.env.SECRET_KEY)
 }
 
-// router.get("/signup", checkNotAuthenticated, (req, res) => {
-//   res.render("signup.ejs");
-// });
+router.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build/index.html'))
+})
 
 
 router.post(
   "/login",
   passport.authenticate("local", {
-    // failureRedirect: "/login",
     failureMessage: true
   }),
   (req, res) => {

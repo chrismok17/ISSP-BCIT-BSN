@@ -14,7 +14,7 @@ app.use(cors());
 
 app.set("view engine", "ejs"); // probably dont need this since we're using react
 app.use(express.static(path.join(__dirname, "public"))); // also probably wont need this
-app.use('/public', express.static('public'));
+app.use(express.static('build'));
 
 app.use(
   session({

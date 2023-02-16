@@ -1,14 +1,12 @@
-// import logo from './logo.svg';
-// import { ReactComponentElement as ReactLogo } from './logo.svg';
 import { useEffect, useContext } from 'react';
 import './App.css';
 import 'react-calendar/dist/Calendar.css';
 import Login from './components/Login/Login.js';
-import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
 import CalendarPage from './containers/Calendar';
 import DataForm from './containers/DataForm';
 import SurveyPage from './containers/SurveyPage';
+import Home from './containers/home'
 import { GlobalContext } from './context';
 
 
@@ -31,7 +29,8 @@ function App() {
         <Link to="/survey">Survey</Link>
       </nav>
       <Routes>
-        <Route index element={< CalendarPage />} />
+        <Route index element={<Home />} />
+        <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/survey" element={<SurveyPage />} />
         <Route path="/update" element={<DataForm />} />
       </Routes>
