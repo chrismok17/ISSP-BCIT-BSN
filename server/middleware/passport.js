@@ -10,7 +10,7 @@ const localLogin = new LocalStrategy(
   
   async (email, password, done) => {
     const user = await userController.getUserByEmailIdAndPassword(email, password);
-    
+    console.log('passport locallogin, what is user', user)
     return user
       ? done(null, user)
       : done(null, false, {

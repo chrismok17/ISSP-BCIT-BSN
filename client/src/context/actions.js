@@ -6,5 +6,17 @@ export const actions = (state, dispatch) => ({
   },
   setSelectedDay: (selectedDay) => {
     dispatch({type:"setSelectedDay", payload:selectedDay})
+  },
+  updateUserData: (email, token, isAdmin) => {
+    dispatch({
+      type: "updateUser",
+      payload: {
+        userData: {
+          email,
+          token
+        },
+        isAdmin
+      }
+    })
   }
 })

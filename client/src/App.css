@@ -45,8 +45,12 @@
 }
 .react-calendar__month-view__days {
   min-height: 300px;
-/*background-color: #023455;  sets blue for every day */
+  background-color: #023455;
 }
+
+/* .react-calendar__month-view__days__day:hover abbr {
+  color: #023455;
+} */
 
 .react-calendar__tile {
   display: flex;
@@ -54,4 +58,12 @@
   justify-content: space-between;
   align-items: center;
   color: white;
+}
+
+/* .react-calendar__navigation button.react-calendar__navigation__label {
+  pointer-events: none;
+} */
+
+nav a {
+  margin-right: 10px;
 }

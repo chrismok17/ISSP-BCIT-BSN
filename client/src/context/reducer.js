@@ -12,6 +12,12 @@ export default function reducer (state, action) {
       return {
         ...state, selectedDay: action.payload
       }
+    case "updateUser":
+      return {
+        ...state,
+        userData: action.payload.userData,
+        isAdmin: action.payload.isAdmin
+      }
     default: return state
   }
 }
