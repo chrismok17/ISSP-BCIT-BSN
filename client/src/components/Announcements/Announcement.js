@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import "./Announcements.css";
 
 const Announcement = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   let date = new Date();
+  const [count, setCount] = useState(0);
   date.setHours(date.getHours() - 8);
-  let datetime= date.toISOString().slice(0, 19).replace('T', ' ');
+  let datetime = date.toISOString().slice(0, 19).replace("T", " ");
+  const counter = (e) => {
+    setCount(e.target.value.length);
+  };
   const handleSubmit = async (e) => {
     // Added 'e' parameter so that i can use e.preventDefault() since before I was getting page reload errors when trying to use fetch, this helps prevent it
     e.preventDefault();
@@ -16,7 +20,7 @@ const Announcement = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, description, date:datetime }),
+      body: JSON.stringify({ title, description, date: datetime }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -35,7 +39,7 @@ const Announcement = () => {
   return (
     <>
       <div className="announcement-wrapper">
-        <h1>Announcements</h1>
+        <h1>Create Announcement</h1>
         <form className="form" onSubmit={(e) => handleSubmit(e)}>
           <label>
             <p>Title</p>
@@ -43,10 +47,13 @@ const Announcement = () => {
           </label>
           <label>
             <p>Description</p>
+            <p className="count">{`${count}/200 Characters`}</p>
             <textarea
               id="description"
-              type="description"
-              onChange={(e) => setDescription(e.target.value)}
+              type="text"
+              maxlength="200"
+              onChange={counter}
+              // onChange={(e) => setDescription(e.target.value)}
             />
           </label>
           <div className="submit-button">
