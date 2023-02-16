@@ -1,5 +1,8 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
 .App {
   text-align: center;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .App-logo {
@@ -14,18 +17,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #023455;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .App-link {
-  color: #61dafb;
+  color: #023455;
 }
 
 @keyframes App-logo-spin {
@@ -40,3 +43,67 @@
 .wrapper {
   padding: 20px;
 }
+.react-calendar__month-view__days {
+  min-height: 300px;
+  background-color: #023455;
+}
+
+/* .react-calendar__month-view__days__day:hover abbr {
+  color: #023455;
+} */
+
+.react-calendar__tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+/* .react-calendar__navigation button.react-calendar__navigation__label {
+  pointer-events: none;
+} */
+
+nav a {
+  margin-right: 10px;
+}
+
+
+/* 
+temporary style to see if announcement works. Please change the style 
+There is another temporary style for icon in component/Announcement/announcement.js file
+*/
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.announcement-container {
+  position: relative;
+  display: inline-block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+
+.dropdown-announcement {
+  position: absolute;
+  left: 500%;
+  top: 100%;
+  transform: translate(-50%, 0);
+  background-color: white;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.announcement-item {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid black;
+}
+

@@ -1,17 +1,47 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import "./popup.css"
+import { GlobalContext } from "../context";
+import FormRow from './FormRow'
 
-export default function PopUp() {
-  return (
-    <div>
-      <p>
-        <b>Jasica Munday</b>
-      </p>
-      <p>
-        <b>10:00-11:00 AM</b>
-      </p>
-      <p>
-        <b>Building NW 4</b>
-      </p>
-    </div>
-  );
+export default function PopUp () {
+  const context = useContext(GlobalContext)
+
+  const [editFormVisible, setEditFormVisible] = useState(false)
+  const [formState, setFormState] = useState(context.state.selectedDay)
+
+  function handleFinishEditing () {
+    console.log('no more editing')
+    setEditFormVisible(false)
+  }
+
+  if (context.state.popupOpen) {
+    return (
+      <div className="popup">
+        <button onClick={() => context.setPopup(false)}>close</button>
+        {context.state.selectedDay.map((data, i) => (
+          <div key={i}>
+            <div>Facilitator: {data.facilitator}</div>
+            <div>Start-time: {data['start-time']}</div>
+            <div>End-time: {data['end-time']}</div>
+            <div>Room Number: {data['room-number']}</div>
+          </div>
+        ))}
+        {context.state.isAdmin && !editFormVisible && (
+          <button onClick={() => setEditFormVisible(true)}>edit</button>
+        )}
+        {editFormVisible && (
+          <>
+            <FormRow
+              setForms={setFormState}
+              forms={formState.length > 0 ? formState : context.state.selectedDay}
+              formNumber={0}
+            />
+            <button onClick={handleFinishEditing}>finish editing</button>
+          </>
+        )}
+      </div>
+    )
+  }
+  return <></>
+
 }

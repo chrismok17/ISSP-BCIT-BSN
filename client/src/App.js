@@ -1,71 +1,48 @@
-// import logo from './logo.svg';
-// import { ReactComponentElement as ReactLogo } from './logo.svg';
-import { useState } from "react";
-import Calendar from "react-calendar";
-import "./App.css";
-import "react-calendar/dist/Calendar.css";
-import PopUp from "./components/PopUp";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Home from "./components/home/home.js";
-import Login from "./components/Login/Login.js";
-// import Announcement from "./components/Announcements/Announcements2";
-// import Login from "./..client/../login";
-import useToken from "./components/App/useToken";
+import { useEffect, useContext } from 'react';
+import './App.css';
+import 'react-calendar/dist/Calendar.css';
+import Login from './components/Login/Login.js';
+import logout from './containers/logout';
+import { Routes, Route, Link } from "react-router-dom";
+import CalendarPage from './containers/Calendar';
+import DataForm from './containers/DataForm';
+import SurveyPage from './containers/SurveyPage';
+import Home from './containers/home'
+import { GlobalContext } from './context';
+import DropdownAnnouncement from './components/Announcement/announcement.js';
 import Announcement from "./components/Announcements/Announcement";
-// import ItemsDisplay from "./components/Announcements/ItemsDisplay";
 
-// function setToken(userToken) {
-//   sessionStorage.setItem('token', JSON.stringify(userToken));
-// }
-
-// function getToken(){
-//   const tokenString = sessionStorage.getItem('token');
-//   const userToken = JSON.parse(tokenString);
-//   return userToken?.token
-
-// }
 
 function App() {
-  // const { token, setToken } = useToken();
-  // const [value, onChange] = useState(new Date());
-  // const [popUpOpen, setPopUpOpen] = useState(false);
-  // // const [token, setToken] = useState();
-  // if (!token) {
-  //   return <Login setToken={setToken} />;
-  // }
+  const { state: { userData: { token } } } = useContext(GlobalContext)
+  useEffect(() => {
+    console.log('token changed', token)
+  }, [token])
 
-  return <Announcement />;
-  // (
-  //   <div className="App">
-  //     <Calendar
-  //       onChange={onChange}
-  //       value={value}
-  //       onClickDay={(value, event) => {
-  //         console.log("clicked.", value, event);
-  //         setPopUpOpen(!popUpOpen);
-  //       }}
-  //     />
-  //     {popUpOpen && <PopUp />}
-  //   </div>
-  // ),
-  // (
-  //   <div className="wrapper">
-  //     <h1>Application</h1>
-  //     <ul>
-  //       <li>
-  //         <Link to={"/"}>Home</Link>
-  //       </li>
-  //     </ul>
-  //     <BrowserRouter>
-  //       <Routes>
-  //         <Route path="/home" element={<Home />} />
-  //         <Route path="announcement" element={<Announcement />} />
-  //       </Routes>
-  //     </BrowserRouter>
-  //   </div>
-  // )
-  // );
+  if (!token) {
+    return <Login />
+
+  }
+
+  return (
+    <>
+      <nav className="navbar">
+        <Link to="/calendar">Calendar </Link>
+        <Link to="/update">Update</Link>
+        <Link to="/survey">Survey</Link>
+        <Link to="/announcements">Announcements</Link>
+        <button onClick={logout}>Logout</button>
+        <DropdownAnnouncement />
+      </nav>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/survey" element={<SurveyPage />} />
+        <Route path="/update" element={<DataForm />} />
+        <Route path="/announcements" element={<Announcement />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
