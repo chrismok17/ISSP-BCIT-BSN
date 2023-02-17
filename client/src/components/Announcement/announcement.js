@@ -9,9 +9,10 @@ const DropdownAnnouncement = () => {
     fetch('http://localhost:8080/announcement')
       .then(response => response.json())
       .then(data => {
-        setAnnouncements(data);
+        setAnnouncements(data.reverse().slice(0,5));
       });
   }, []);
+
 
   return (
     <div className="announcement-container">

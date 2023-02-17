@@ -91,11 +91,11 @@ There is another temporary style for icon in component/Announcement/announcement
 
 .dropdown-announcement {
   position: absolute;
-  left: 500%;
+  left: 400%;
   top: 100%;
   transform: translate(-50%, 0);
   background-color: white;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
