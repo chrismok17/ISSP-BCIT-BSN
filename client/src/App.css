@@ -67,3 +67,43 @@
 nav a {
   margin-right: 10px;
 }
+
+
+/* 
+temporary style to see if announcement works. Please change the style 
+There is another temporary style for icon in component/Announcement/announcement.js file
+*/
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.announcement-container {
+  position: relative;
+  display: inline-block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+
+.dropdown-announcement {
+  position: absolute;
+  left: 400%;
+  top: 100%;
+  transform: translate(-50%, 0);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.announcement-item {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid black;
+}
+

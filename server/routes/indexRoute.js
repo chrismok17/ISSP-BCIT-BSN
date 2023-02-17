@@ -5,7 +5,25 @@ const passport = require("../middleware/passport");
 const jwt = require('jsonwebtoken')
 const path = require('path')
 const updateForm = require('../models/openLabForm');
+const { getAnnouncement } = require("../models/announcement");
+const mysql = require("mysql2");
+require("dotenv").config();
+const MYSQL_DB = process.env.MYSQL_DB;
+const MYSQL_HOST = process.env.MYSQL_HOST;
+const MYSQL_USER = process.env.MYSQL_USER;
+const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
 
+const db = mysql.createConnection({
+  host: MYSQL_HOST,
+  user: MYSQL_USER,
+  password: MYSQL_PASSWORD,
+  database: MYSQL_DB,
+});
+
+db.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected");
+});
 
 function getUserToken (email) {
   return jwt.sign({ email }, process.env.SECRET_KEY)
@@ -67,6 +85,28 @@ router.post('/logout', function(req, res, next) {
       if(err) return next(err);
       res.redirect('/login');
   });
+});
+
+router.get("/announcement", async (req, res) => {
+  try {
+    const announcement = await getAnnouncement();
+    return res.status(200).send(announcement);
+  } catch (error) {
+    return res.status(401).send({ error: error.message });
+  }
+  
+});
+
+router.post("/add", (req, res) => {
+  let title = req.body.title;
+  let description = req.body.description;
+  let date = req.body.date;
+  let sql = `INSERT INTO announcements (title, description, date) VALUES ('${title}', '${description}', '${date}')`;
+  db.query(sql, (error, results, fields) => {
+    if (error) throw error;
+    console.log(results);
+  });
+  res.send(title, description, date);
 });
 
 

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import './Login.css';
 import { GlobalContext } from '../../context'
+import Signup from '../signup/signup';
 
 // Moved fetch request to inside the Login(). This sends the username and password as json to localhost:8080/login to get authenticated
 export default function Login() {
@@ -8,6 +9,7 @@ export default function Login() {
 
   const [email, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [ showSignup, setShowSignup ] = useState(false)
 
   const handleSubmit = (e) => {
     // Added 'e' parameter so that i can use e.preventDefault() since before I was getting page reload errors when trying to use fetch, this helps prevent it
@@ -15,7 +17,7 @@ export default function Login() {
     fetch('http://localhost:8080/login', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ email: email, password: password })
     })
@@ -36,7 +38,11 @@ export default function Login() {
    }
 
   return(
-    <>
+    <> 
+    <div>
+      {showSignup ? (
+        <Signup />
+      ):(
       <div className="login-wrapper">
         <h1>SIGN IN </h1>
           <form className="form" onSubmit={handleSubmit}>
@@ -51,8 +57,14 @@ export default function Login() {
             <div className="submit-button">
               <button type="submit">SIGN IN</button>
             </div>
+            <p class="mt-4">New User? <button class="create-Link" onClick={()=> setShowSignup(true)}>Sign Up</button ></p>
+            {/* <p>Forgot Password? <a href="/forgot">Reset</a></p> */}
+
+
           </form>
       </div>
+      )}
+    </div>
     </>
 
   )
