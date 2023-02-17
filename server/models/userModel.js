@@ -1,25 +1,4 @@
-const mysql = require("mysql2");
-require("dotenv").config();
-const MYSQL_DB = process.env.MYSQL_DB;
-const MYSQL_HOST = process.env.MYSQL_HOST;
-const MYSQL_USER = process.env.MYSQL_USER;
-const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
-
-
-const db = mysql.createConnection({
-  host: MYSQL_HOST,
-  user: MYSQL_USER,
-  password: MYSQL_PASSWORD,
-  database: MYSQL_DB
-});
-
-db.connect(function(err) {
-  if (err) {
-      throw err;
-  }
-  console.log(" Database Connected");
-})
-
+const db = require("./index")
 
 const userModel = {
   findOne: (email) => {
@@ -29,7 +8,7 @@ const userModel = {
       db.query(sql, (error, results) => {
         if (error) return reject(error);
 
-        if (results.length != 0 && results[0].email == email) {
+        if (results.length !== 0 && results[0].email === email) {
           return resolve(results[0]);
         } 
         reject(new Error(`Couldn't find user with email: '${email}'`));
@@ -43,7 +22,7 @@ const userModel = {
       db.query(sql, (error, results) => {
         if (error) return reject(error);
         
-        if (results[0].userid == id) {
+        if (results[0].userid === id) {
           return resolve(results[0]);
         }
         reject(new Error(`Couldn't find user with id: ${id}`));
@@ -67,6 +46,6 @@ const userModel = {
 //   // })
 // }
 
-module.exports = { db, userModel };
+module.exports = { userModel };
 
 
