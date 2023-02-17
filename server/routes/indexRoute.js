@@ -4,6 +4,7 @@ const { ensureAuthenticated, isAdmin, checkNotAuthenticated } = require("../midd
 const passport = require("../middleware/passport");
 const jwt = require('jsonwebtoken')
 const path = require('path')
+const updateForm = require('../models/openLabForm');
 const { getAnnouncement } = require("../models/announcement");
 const mysql = require("mysql2");
 require("dotenv").config();
@@ -46,6 +47,37 @@ router.post(
   }
 )
 
+router.post('/getMonth', function(req, res) {
+  console.log(Object.keys(req))
+  console.log("req.body", req.body)
+  updateForm.findMonth(req.body.month)
+    .then((results) => {
+      console.log("update form results", results)
+      if (results) {
+        res.status(200).json({ results })
+      } else {
+        throw new Error("posting to update form", {cause: results})
+      }
+    }).catch((err) => {
+      console.error(err)
+    })
+})
+
+router.post('/updateCalendar', function(req, res) {
+  console.log(Object.keys(req))
+  console.log("req.body.forms", req.body.forms)
+  updateForm.updateCalendar(req.body.forms)
+    .then((results) => {
+      console.log("update form results", results)
+      if (results) {
+        res.status(200).json({ results })
+      } else {
+        throw new Error("posting to update form", {cause: results})
+      }
+    }).catch((err) => {
+      console.error(err)
+    })
+})
 
 // logout function
 router.post('/logout', function(req, res, next) {

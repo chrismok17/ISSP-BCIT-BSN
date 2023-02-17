@@ -4,7 +4,7 @@ import PopUp from '../components/PopUp';
 import CalendarDay from '../components/CalendarDay';
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { GlobalContext } from '../context';
-import { dummyData } from '../dummydata';
+
 
 export default function CalendarPage() {
   const Context = useContext(GlobalContext);
@@ -12,21 +12,38 @@ export default function CalendarPage() {
   const [ filteredSheetData, setFilteredSheetData ] = useState([])
   const matchedDates = useRef({})
 
+  async function fetchData() {
+    const response = await fetch("http://localhost:8080/getMonth", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      mode: 'cors',
+      body: JSON.stringify({month: month.getMonth() + 1})
+    }).then((results) => {
+      if (results.status === 200) {
+        return results.json()
+      }
+    })
+    console.log("what is response", response)
+    setFilteredSheetData(response.results)
+  }
   useEffect(() => {
     // calendar month button is buggy. this prevents it from being used
     const calendarMonthLabel = document.querySelector('.react-calendar__navigation button.react-calendar__navigation__label')
     calendarMonthLabel.setAttribute('tabindex', -1)
     calendarMonthLabel.style.pointerEvents = 'none'
+    fetchData()
   }, [])
 
-  useEffect(() => {
-    if (dummyData.length > 0) {
-      setFilteredSheetData(dummyData.filter((openLab) => {
-        return new Date(openLab.date).getUTCMonth() === month.getMonth()
-      }))
-    }
-    // eslint-disable-next-line
-  }, [dummyData, month])
+  // useEffect(() => {
+  //   if (dummyData.length > 0) {
+  //     setFilteredSheetData(dummyData.filter((openLab) => {
+  //       return new Date(openLab.date).getUTCMonth() === month.getMonth()
+  //     }))
+  //   }
+  //   // eslint-disable-next-line
+  // }, [dummyData, month])
 
   function handleActiveStartDateChange ({ activeStartDate }) {
     setMonth(activeStartDate)
@@ -50,7 +67,8 @@ export default function CalendarPage() {
         }}
         tileContent={({ date, view }) => {
           let matchingDay = []
-          if (filteredSheetData.length > 0 && date.getMonth() === month.getMonth()) {
+          console.log("filtered sheet data", filteredSheetData)
+          if (filteredSheetData && filteredSheetData.length > 0 && date.getMonth() === month.getMonth()) {
             matchingDay = filteredSheetData.filter((openLab) => {
               return date.getDate() === new Date(openLab.date).getUTCDate()
             })

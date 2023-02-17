@@ -29,7 +29,7 @@ const userModel = {
       db.query(sql, (error, results) => {
         if (error) return reject(error);
 
-        if (results.length != 0 && results[0].email == email) {
+        if (results.length !== 0 && results[0].email === email) {
           return resolve(results[0]);
         } 
         reject(new Error(`Couldn't find user with email: '${email}'`));
@@ -43,7 +43,7 @@ const userModel = {
       db.query(sql, (error, results) => {
         if (error) return reject(error);
         
-        if (results[0].userid == id) {
+        if (results[0].userid === id) {
           return resolve(results[0]);
         }
         reject(new Error(`Couldn't find user with id: ${id}`));

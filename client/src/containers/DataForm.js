@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FormRow from '../components/FormRow'
+import { updateCalendar } from "../utils/fetchFunctions";
 import "./data-form.css"
 
 const defaultState = {
@@ -7,7 +8,7 @@ const defaultState = {
   'start-time': '',
   'end-time': '',
   facilitator: '',
-  stat: false,
+  stat: 0,
   'room-number': ''
 }
 
@@ -15,8 +16,10 @@ export default function DataForm () {
   const [numberOfRows, setNumberOfRows] = useState(1)
   const [forms, setForms] = useState([{ ...defaultState }])
 
-  function handleSubmit() {
-    console.log('HANDLE SUBMIT', forms)
+  async function handleSubmit() {
+    const response = await updateCalendar(forms)
+    console.log('HANDLE SUBMIT', forms, response)
+
     //CLEAR FORMS
     setForms([{...defaultState}])
     setNumberOfRows(1)
@@ -26,6 +29,7 @@ export default function DataForm () {
     setForms([...forms, { ...defaultState }])
     setNumberOfRows(numberOfRows + 1)
   }
+
 
   return (
     <>

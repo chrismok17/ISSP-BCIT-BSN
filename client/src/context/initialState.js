@@ -3,5 +3,5 @@ export const initialState = {
   sheetData: [],
   selectedDay: [],
   userData: { email: '', token: '' },
-  isAdmin: true // should be false by default
+  isAdmin: false // should be false by default
 }
