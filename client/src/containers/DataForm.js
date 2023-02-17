@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FormRow from '../components/FormRow'
+import { updateCalendar } from "../utils/fetchFunctions";
 import "./data-form.css"
 
 const defaultState = {
@@ -16,14 +17,7 @@ export default function DataForm () {
   const [forms, setForms] = useState([{ ...defaultState }])
 
   async function handleSubmit() {
-    const response = await fetch("http://localhost:8080/updateCalendar", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      mode: 'cors',
-      body: JSON.stringify({forms})
-    })
+    const response = await updateCalendar(forms)
     console.log('HANDLE SUBMIT', forms, response)
 
     //CLEAR FORMS

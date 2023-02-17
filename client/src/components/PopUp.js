@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./popup.css"
 import { GlobalContext } from "../context";
+import { updateCalendar } from "../utils/fetchFunctions";
 import FormRow from './FormRow'
 
 export default function PopUp () {
@@ -10,14 +11,20 @@ export default function PopUp () {
   const [formState, setFormState] = useState(context.state.selectedDay)
 
   function handleFinishEditing () {
-    console.log('no more editing')
+    console.log('no more editing', formState)
+    updateCalendar(formState)
     setEditFormVisible(false)
+  }
+
+  function handleClose () {
+    setEditFormVisible(false)
+    context.setPopup(false)
   }
 
   if (context.state.popupOpen) {
     return (
       <div className="popup">
-        <button onClick={() => context.setPopup(false)}>close</button>
+        <button onClick={handleClose}>close</button>
         {context.state.selectedDay.map((data, i) => (
           <div key={i}>
             <div>Facilitator: {data.facilitator}</div>
