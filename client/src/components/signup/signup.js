@@ -44,7 +44,8 @@ export default function Signup() {
     return (
         <>
         <div className="signup-wrapper">
-            <h1>SIGN UP</h1>
+            <h1>Create an account</h1>
+            <h5>Only for current BCIT nursing students.</h5>
             <form className="form" onSubmit={handleSubmit}>
             <label>
                 <p>BCIT Email</p>
